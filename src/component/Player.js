@@ -9,22 +9,26 @@ const players = [
 ];
 
 export const Play = () => {
-  const [score, setscore] = useState(players);
+  const [score, setScore] = useState(players);
   const [reset, setReset] = useState(true);
   const incrementScore = (index) => {
     const updateScore = [...score];
     updateScore[index].playerscore += 1;
-    setscore(updateScore);
+    setScore(updateScore);
   };
 
   const decrementScore = (index) => {
     const updateScore = [...score];
     updateScore[index].playerscore -= 1;
-    setscore(updateScore);
+    setScore(updateScore);
   };
   const Reset = () => {
-    setReset(!reset);
+    const resetScore = players.map((player) => {
+      return { ...player, playerscore: 0 };
+    });
+    setScore(resetScore);
   };
+
   return (
     <div className="ml-96">
       <div className="w-[530px] h-[533px] border rounded-2xl p-8">
@@ -36,28 +40,26 @@ export const Play = () => {
           Hidden in the middle of text
         </p>
         <div>
-          {score.map((item, index) => {
+          {score.map((element, index) => {
             return (
               <div
                 key={index}
-                id={item.id}
+                id={element.id}
                 className="flex flex-row justify-between items-center w-[466px] h-[72px] mt-6"
               >
-                <div className="flex items-center">{item.name}</div>
+                <div className="flex items-center">{element.name}</div>
 
-                <div className="flex items-center rounded-full h-[40px] bg-gray-200 border-1 gap-7 ">
+                <div className="flex elements-center rounded-full h-[40px] bg-gray-200 border-1 gap-7 ">
                   {" "}
                   <div
                     onClick={() => decrementScore(index)}
-                    className="h-10 w-10 p-2 border-1 rounded-full text-center  bg-gray-50"
+                    className="h-10 w-10 p-2 border-1 rounded-full text-center   bg-gray-50"
                   >
                     -
                   </div>
-                  {reset && (
-                    <div>
-                      <div key={index}>{item.playerscore}</div>
-                    </div>
-                  )}
+                  <div className="flex items-center">
+                    <div key={index}>{element.playerscore}</div>
+                  </div>
                   <div
                     onClick={() => incrementScore(index)}
                     className="h-10 w-10 p-2 border-1 rounded-full text-center  bg-gray-50"
